@@ -4,9 +4,6 @@ import ApiCalls from "./services/ApiCalls";
 import { createRoot } from 'react-dom/client';
 import {IoRemoveCircleOutline} from "react-icons/io5";
 import {Button} from "./model/button";
-import apiCalls from "./services/ApiCalls";
-
-
 
 function App() {
 
@@ -50,19 +47,19 @@ function App() {
     }
 
     function renderButtons(): void {
-        getButtons().then((data) => {
+        getButtons().then((data: Button[]) => {
 
             if (data) {
-                data.map(button => {
-                    renderButton(button, true);
+                data.map((button: Button): void => {
+                    return renderButton(button, true);
                 })
             }
         })
     }
 
-    async function getButtons(): Promise<any[]> {
+    async function getButtons(): Promise<Button[]> {
         let api: ApiCalls = new ApiCalls();
-        let buttons: Promise<any[]> = api.getAllButtons();
+        let buttons: Promise<Button[]> = api.getAllButtons();
         return await buttons;
     }
 
@@ -79,7 +76,7 @@ function App() {
         let apiCalls = new ApiCalls();
         apiCalls.deleteButton(id);
         myArrayElements = myArrayElements.filter((element) => {
-            return element.props.children[0].props.id != `prefijo_${id}`;
+            return element.props.children[0].props.id !== `prefijo_${id}`;
         })
         renderButton(null, false);
     }
@@ -88,7 +85,7 @@ function App() {
         let apiCalls: ApiCalls = new ApiCalls();
         let button: Button = await apiCalls.add(id);
         myArrayElements = myArrayElements.map(element => {
-            if (element.props.children[0].props.id == `prefijo_${id}`) {
+            if (element.props.children[0].props.id === `prefijo_${id}`) {
                 return createElement(button);
             }
             return element;

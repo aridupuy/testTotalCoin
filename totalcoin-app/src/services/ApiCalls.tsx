@@ -1,5 +1,3 @@
-// @ts-ignore
-import {constants} from "http2";
 import {Button} from "../model/button";
 
 class ApiCalls {
