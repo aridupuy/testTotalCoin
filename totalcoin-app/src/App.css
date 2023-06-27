@@ -1,0 +1,46 @@
+.App {
+  text-align: center;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: baseline;
+  margin: 2em;
+}
+.column, #contenedor{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: normal;
+  flex-wrap: wrap;
+  width: fit-content;
+
+}
+.mt-3{
+  margin-top: 3em;
+}
+.App-link {
+  color: #61dafb;
+}
+.button {
+  height: 46px;
+  background: white;
+  text-align: center;
+  margin-right: 3%;
+}
+
+.add{
+  color: green;
+  border: 1px solid green;
+  width: 26%;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
