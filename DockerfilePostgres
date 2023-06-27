@@ -1,0 +1,3 @@
+FROM postgres
+COPY backend/TotalCoin/dev-environment/init.sql /docker-entrypoint-initdb.d/
+

@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  phpapache:
+    build: .
+    depends_on:
+      - pg_container
+    container_name: webServer
+    ports:
+      - "8080:81"
+    volumes:
+      - ./backend/TotalCoin/:/TotalCoin/:cached
+      - ./backend/TotalCoin/dev-environment/virtualHost.conf:/etc/apache2/conf-enabled/TotalCoin-vhosts.conf
+      - ./backend/TotalCoin/dev-environment/php/php-8.1.ini:/usr/local/etc/php/conf.d/99-php-dev.ini:ro
+    networks:
+      - default
+  db:
+    container_name: pg_container
+    build:
+      context: .
+      dockerfile: DockerfilePostgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: myUser
+      POSTGRES_PASSWORD: UnPassword
+      POSTGRES_DB: totalcoin
+      POSTGRES_HOST: localhost
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_PORT: "5432"
+    ports:
+          - "5432:5432"
+    volumes:
+      - ./backend/pgData:/var/lib/postgresql/data
+    networks:
+      - default
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_PORT: 81
+    ports:
+      - "5050:80"
+    networks:
+      - default
+  react-ui:
+    build:
+      context: totalcoin-app
+    ports:
+      - "3000:3000"
+    container_name: react-ui
+    stdin_open: true
+    volumes:
+      - ./totalcoin-app:/usr/src/app/totalcoin
+      - /usr/src/app/totalcoin/node_modules
+volumes:
+  postgresVolume:
+networks:
+  default: ~
